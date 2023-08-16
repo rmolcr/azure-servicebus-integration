@@ -14,4 +14,4 @@ Examples:
 `./gradlew build`
 
 ## Run
-`./gradlew bootRun --args='--spring.profiles.active=standalone'`
+`./gradlew bootRun`
