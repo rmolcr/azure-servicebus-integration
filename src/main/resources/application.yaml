@@ -1,0 +1,40 @@
+logging:
+  level:
+    root: INFO
+    com.azure.core.amqp.implementation: ERROR
+    com.azure.messaging.servicebus: ERROR
+
+spring:
+  cloud:
+    azure:
+      credential:
+        client-id: ${APP_ID}
+        client-secret: ${APP_SECRET}
+      profile:
+        tenant-id: ${TENANT_ID}
+
+      servicebus:
+        namespace: "mynamespace"
+
+    stream:
+      function:
+        definition: dummyConsumer;dummySupplier
+
+      bindings:
+        dummyConsumer-in-0:
+          destination: dummy # topic name
+          group: kotlinpg # topic subscription
+        dummySupplier-out-0:
+          destination: dummy # topic name
+
+      servicebus:
+        bindings:
+          dummyConsumer-in-0:
+            consumer:
+              client:
+                transport-type: amqp_web_sockets
+          dummySupplier-out-0:
+            producer:
+              client:
+                transport-type: amqp_web_sockets
+              entity-type: topic
